@@ -1333,7 +1333,7 @@ static void rtl8101_proc_init(struct net_device *dev)
 
                 for (f = rtl8101_proc_files; f->name[0]; f++) {
                         if (!proc_create_data(f->name, S_IFREG | S_IRUGO, dir,
-                                              &rtl8101_proc_fops, f->show)) {
+                                              (void *)&rtl8101_proc_fops, f->show)) {
                                 printk("Unable to initialize "
                                        "/proc/net/%s/%s/%s\n",
                                        MODULENAME, dev->name, f->name);
@@ -11266,7 +11266,7 @@ static const struct net_device_ops rtl8101_netdev_ops = {
         .ndo_stop		= rtl8101_close,
         .ndo_get_stats		= rtl8101_get_stats,
         .ndo_start_xmit		= rtl8101_start_xmit,
-        .ndo_tx_timeout		= rtl8101_tx_timeout,
+        .ndo_tx_timeout		= (void *)rtl8101_tx_timeout,
         .ndo_change_mtu		= rtl8101_change_mtu,
         .ndo_set_mac_address	= rtl8101_set_mac_address,
         .ndo_do_ioctl		= rtl8101_do_ioctl,
